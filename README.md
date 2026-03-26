@@ -1,69 +1,82 @@
-# ADNO FULL VERSION
+# ADNO
 
 Adno is a web application for viewing, editing and sharing narratives and pathways on static images and IIIF images.
 
-ADNO has 2 available versions : a [Full version](https://github.com/adnodev/w.adno.app) including the Editor and Viewer and the [Light](https://github.com/adnodev/r.adno.app) one including only the Viewer.
+---
 
-## How to start with ADNO ?
+## Getting started
 
-First, go to hhttps://github.com/adnodev/adno/releases and download the version you would like to use (FULL or LIGHT)
-Then, if you want to use it locally you have to use a web server.
-You can create a light web server using **python -m http.server 8080** command to run a web server on the port 8080.
-Unzip the ADNO package to your web server and start it.
+### Use Adno locally
 
+1. Download the latest release from [github.com/adnodev/adno/releases](https://github.com/adnodev/adno/releases)
+2. Unzip the archive
+3. Start a local web server from the unzipped folder — for example with Python:
+   ```bash
+   python -m http.server 8080
+   ```
+4. Open [http://localhost:8080](http://localhost:8080) in your browser
 
-## Host ADNO with Github Pages
+---
 
-Download the latest release of Adno with the version of your choice ( full-version or light-version) from (https://github.com/adnodev/adno/releases)
+### Host Adno on GitHub Pages
 
-Unzip the archive to your folder and push it to your Github repository.
+1. Download and unzip the latest release
+2. Push the contents to a GitHub repository
+3. In your repository, go to **Settings → Pages**
+4. Select the branch to deploy from and save
 
-Once you’ve pushed to Github you need to go to Github’s website, select your repository and click on the “settings” tab.
+Your Adno instance will be live at `https://<your-username>.github.io/<your-repo>`.
 
-Then, select the tab “Pages” on the left panel.
+---
 
-You’ll have to select the branch you want to deploy the website from and save your choice.
+## IIIF image examples
 
-Enjoy using Adno !
+- [ronallo.com — example manifests](https://ronallo.com/iiif-workshop/presentation/example-manifests.html)
+- `https://free.iiifhosting.com/iiif/1c8d49343676a04fffcd92979c02e9394e48bac96f590fffbadffc9133cd06b9/info.json`
+- `https://iiif.emf.fr/iiif/3/peutinger.jp2/info.json`
+- `https://iiif.emf.fr/iiif/3/saint-savin.jpg/info.json`
 
+---
 
-## IIIF pictures examples
-* https://ronallo.com/iiif-workshop/presentation/example-manifests.html
-* https://free.iiifhosting.com/iiif/1c8d49343676a04fffcd92979c02e9394e48bac96f590fffbadffc9133cd06b9/info.json
-* https://iiif.emf.fr/iiif/3/peutinger.jp2/info.json
-* https://iiif.emf.fr/iiif/3/saint-savin.jpg/info.json
+## For developers
+
+### Setup
+
+```bash
+git clone https://github.com/adnodev/adno.git
+cd adno
+cp .env.example .env   # fill in your values
+npm install
+npm run dev
+```
+
+### Build
+
+```bash
+npm run build
+```
+
+> If you run into issues, delete `node_modules` and `package-lock.json` then reinstall with `npm install`.
+
+### Customize your instance
+
+Edit your `.env` file with the following variables:
+
+```env
+# Analytics (Matomo)
+MATOMO_SITE_ID=your-site-id
+MATOMO_URL=https://your-matomo-instance.com
+
+# App title
+ADNO_TITLE=My Adno Instance
+
+# Footer
+ADNO_FOOTER=true
+ADNO_FOOTER_TEXT=Your footer text here
+```
+
+---
 
 ## Licence
 
-[LICENCE](https://github.com/adnodev/adno/blob/main/LICENCE)
-
-## For developpers
-
-If you want to contribute to ADNO here are few steps to start 
-  * clone the project from github (https://github.com/adnodev/adno.git)
-  * switch to adno-react branch
-  * Start the project with the following command : **yarn start**
-    * Create a .env file and put the version you would like to use by using the variable ADNO_MODE=FULL or ADNO_MODE=LIGHT
-  * To build the project you have to choose the version (full or light)
-    * run **yarn build-full** to build full-version and **yarn build-light** to build the light version.
-  * In case of errors try to remove node_modules folder, .parcel-cache and yarn.lock file and reinstall module with **yarn install** command.
-
-## Custom your own ADNO
-Create a .env file and insert the following properties as you wish :
-```
-# MODE 
-ADNO_MODE=FULL
-
-# MATOMO
-MATOMO_SITE_ID=YOUR SITE ID HERE
-MATOMO_URL=YOUR OWN MATOMO URL
-
-# WEBSITE PROPERTIES
-ADNO_TITLE=YOUR OWN TITLE
-
-# FOOTER
-ADNO_FOOTER=TRUE
-ADNO_FOOTER_TEXT=YOUR FOOTER TEXT HERE
-
-```
-
+See [LICENCE](https://github.com/adnodev/adno/blob/main/LICENCE).
