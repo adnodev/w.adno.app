@@ -1,0 +1,48 @@
+name: Deploy ADNO Production
+
+on:
+  repository_dispatch:
+    types: [new_release]
+
+jobs:
+  deploy:
+    name: deploy_prod
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Get GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.ADNO_BOT_APP_ID }}
+          private-key: ${{ secrets.ADNO_BOT_PRIVATE_KEY }}
+          repositories: adno
+          owner: adnodev
+
+      - name: Download release asset
+        run: |
+          VERSION="${{ github.event.client_payload.version }}"
+          curl -L \
+            -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
+            -H "Accept: application/octet-stream" \
+            https://github.com/adnodev/adno/releases/download/v${VERSION}/adno.${VERSION}.zip \
+            -o adno.zip
+          unzip adno.zip
+
+      - name: Add CNAME
+        run: echo "adno.app" > dist/CNAME
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
