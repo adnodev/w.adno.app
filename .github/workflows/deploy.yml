@@ -23,7 +23,7 @@ jobs:
           app-id: ${{ secrets.ADNO_BOT_APP_ID }}
           private-key: ${{ secrets.ADNO_BOT_PRIVATE_KEY }}
           repositories: adno
-          owner: adno-org
+          owner: adnodev
 
       - name: Download release asset
         run: |
@@ -31,7 +31,7 @@ jobs:
           curl -L \
             -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
             -H "Accept: application/octet-stream" \
-            https://github.com/adno-org/adno/releases/download/v${VERSION}/adno.${VERSION}.zip \
+            https://github.com/adnodev/adno/releases/download/v${VERSION}/adno.${VERSION}.zip \
             -o adno.zip
           unzip adno.zip
 
